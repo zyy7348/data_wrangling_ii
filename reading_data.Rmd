@@ -93,6 +93,27 @@ toothbrush_df = data_frame(
 
 ## APIs
 
+### Water use data
+
+Getting water data vai API.
+
+```{r}
+nyc_water = GET("https://data.cityofnewyork.us/resource/waf7-5gvc.csv") %>% 
+  content("parsed")
+```
+
+Getting the same data from JSON ...
+
+```{r}
+nyc_water = GET("https://data.cityofnewyork.us/resource/waf7-5gvc.json") %>% 
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  as_tibble()
+```
+
+
+
+https://data.cityofnewyork.us/resource/waf7-5gvc.csv
 
 
 ```{r}

@@ -146,6 +146,8 @@ $(document).ready(function () {
 <pre class="r"><code>library(httr)</code></pre>
 <div id="scraping" class="section level2">
 <h2>Scraping</h2>
+<div id="nsduh-table" class="section level3">
+<h3>NSDUH Table</h3>
 <pre class="r"><code>url = &quot;http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm&quot;
 
 drug_use_xml = read_html(url)
@@ -179,6 +181,7 @@ drug_use_xml</code></pre>
   .[-1,] %&gt;% 
   as_tibble()</code></pre>
 </div>
+</div>
 <div id="cost-of-living-in-nyc" class="section level2">
 <h2>Cost of living in NYC</h2>
 <pre class="r"><code>url = &quot;https://www.bestplaces.net/cost_of_living/city/new_york/new_york&quot;
@@ -187,8 +190,36 @@ nyc_cost_xml = read_html(url)</code></pre>
   html_table(header = TRUE) %&gt;% 
   .[-1,] %&gt;% 
   as_tibble()</code></pre>
-<div id="nsduh-table" class="section level3">
-<h3>NSDUH Table</h3>
+<div id="hp_ss-cast" class="section level3">
+<h3>HP_SS Cast</h3>
+<p>I want the names!</p>
+<pre class="r"><code>url = &quot;http://www.imdb.com/title/tt0241527/&quot;
+
+hpss_xml = read_html(url)
+
+hpss_cast = hpss_xml %&gt;% 
+  html_nodes(css = &quot;.itemprop .itemprop&quot;) %&gt;% 
+  html_text()</code></pre>
+</div>
+<div id="toothbrush-reviews" class="section level3">
+<h3>Toothbrush reviews</h3>
+<p>Dental hygiene</p>
+<pre class="r"><code>url = &quot;https://www.amazon.com/Philips-Sonicare-rechargeable-toothbrush-HX6211/product-reviews/B00YAR7ZFM/ref=cm_cr_arp_d_viewopt_srt?ie=UTF8&amp;reviewerType=all_reviews&amp;sortBy=recent&amp;pageNumber=1&quot;
+
+toothbrush_xml = read_html(url)
+
+toothbrush_title = toothbrush_xml %&gt;% 
+  html_nodes(css = &quot;#cm_cr-review_list .a-color-base&quot;) %&gt;% 
+  html_text()
+
+toothbrush_stars = toothbrush_xml %&gt;% 
+  html_nodes(css = &quot;#cm_cr-review_list .review-rating&quot;) %&gt;% 
+  html_text()
+
+toothbrush_df = data_frame(
+  title = toothbrush_title,
+  stars = toothbrush_stars
+)</code></pre>
 </div>
 </div>
 <div id="apis" class="section level2">
