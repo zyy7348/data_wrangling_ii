@@ -13,6 +13,8 @@ library(httr)
 
 ## Scraping
 
+### NSDUH Table
+
 ```{r}
 url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
 
@@ -50,9 +52,42 @@ nyc_cost_table = (nyc_cost_xml %>% html_nodes(css = "table"))[[2]] %>%
   as_tibble()
 ```
 
-### NSDUH Table
+### HP_SS Cast
+
+I want the names!
 
 ```{r}
+url = "http://www.imdb.com/title/tt0241527/"
+
+hpss_xml = read_html(url)
+
+hpss_cast = hpss_xml %>% 
+  html_nodes(css = ".itemprop .itemprop") %>% 
+  html_text()
+
+```
+
+### Toothbrush reviews
+
+Dental hygiene
+
+```{r}
+url = "https://www.amazon.com/Philips-Sonicare-rechargeable-toothbrush-HX6211/product-reviews/B00YAR7ZFM/ref=cm_cr_arp_d_viewopt_srt?ie=UTF8&reviewerType=all_reviews&sortBy=recent&pageNumber=1"
+
+toothbrush_xml = read_html(url)
+
+toothbrush_title = toothbrush_xml %>% 
+  html_nodes(css = "#cm_cr-review_list .a-color-base") %>% 
+  html_text()
+
+toothbrush_stars = toothbrush_xml %>% 
+  html_nodes(css = "#cm_cr-review_list .review-rating") %>% 
+  html_text()
+
+toothbrush_df = data_frame(
+  title = toothbrush_title,
+  stars = toothbrush_stars
+)
 
 ```
 
