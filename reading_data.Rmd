@@ -111,13 +111,30 @@ nyc_water = GET("https://data.cityofnewyork.us/resource/waf7-5gvc.json") %>%
   as_tibble()
 ```
 
+### BRFSS
+```{r}
+yelp = GET("https://api.yelp.com/v3/businesses/search") %>%
+  content()
 
-
-https://data.cityofnewyork.us/resource/waf7-5gvc.csv
+```
 
 
 ```{r}
+brfss = GET("https://catalog.data.gov/dataset/nutrition-physical-activity-and-obesity-behavioral-risk-factor-surveillance-system") %>%
+  content("parsed")
+```
 
+### Catch the pokemon (data)
+
+```{r}
+poke = GET("http://pokeapi.co/api/v2/pokemon/1") %>%
+  content()
+
+names(poke)
+
+poke$name
+poke$height
+poke$abilities
 ```
 
 
